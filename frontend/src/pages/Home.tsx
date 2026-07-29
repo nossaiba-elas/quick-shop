@@ -18,10 +18,12 @@ export function Home({ onRequireLogin, language }: { onRequireLogin?: () => void
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
   const [checkoutTotal, setCheckoutTotal] = useState(0);
+  const loadErrorMessage = language === 'fr'
+    ? 'Impossible de charger les produits. Vérifiez que le backend tourne sur :5000.'
+    : 'Unable to load products. Make sure the backend is running on :5000.';
   const t = language === 'fr'
     ? {
         loading: 'Chargement des produits…',
-        error: 'Impossible de charger les produits. Vérifiez que le backend tourne sur :5000.',
         heroBadge: 'Nouveau printemps 2026',
         heroTitle: 'Équipez votre quotidien avec les meilleurs tech produits',
         heroText: 'Découvrez des produits modernes, rapides et fiables — du bureau à la détente, livrés en quelques jours.',
@@ -38,7 +40,7 @@ export function Home({ onRequireLogin, language }: { onRequireLogin?: () => void
         articles: 'articles',
         addToCart: 'Ajouter au panier',
         unavailable: 'Indisponible',
-        checkoutSuccess: '✅ Commande créée !\nN° {orderId}\nTotal : ${total}',
+        checkoutSuccess: '✅ Commande créée !\nN° {orderId}\nTotal : {total}',
         checkoutError: '❌ Échec du paiement. Réessayez.',
         stat1: 'Livraison express',
         stat2: 'Produits certifiés',
@@ -47,7 +49,6 @@ export function Home({ onRequireLogin, language }: { onRequireLogin?: () => void
       }
     : {
         loading: 'Loading products…',
-        error: 'Unable to load products. Make sure the backend is running on :5000.',
         heroBadge: 'New spring 2026',
         heroTitle: 'Equip your daily life with the best tech products',
         heroText: 'Discover modern, fast and reliable products — from work to leisure, delivered in just a few days.',
@@ -64,7 +65,7 @@ export function Home({ onRequireLogin, language }: { onRequireLogin?: () => void
         articles: 'items',
         addToCart: 'Add to cart',
         unavailable: 'Unavailable',
-        checkoutSuccess: '✅ Order created!\n# {orderId}\nTotal: ${total}',
+        checkoutSuccess: '✅ Order created!\n# {orderId}\nTotal: {total}',
         checkoutError: '❌ Checkout failed. Please try again.',
         stat1: 'Express delivery',
         stat2: 'Certified products',
@@ -78,13 +79,13 @@ export function Home({ onRequireLogin, language }: { onRequireLogin?: () => void
         const data = await getProducts();
         setProducts(data);
       } catch (err) {
-        setError(t.error);
+        setError(loadErrorMessage);
       } finally {
         setLoading(false);
       }
     }
     loadProducts();
-  }, []);
+  }, [loadErrorMessage]);
 
   function handleAddToCart(productId: number) {
     const existing = cartItems.find((item) => item.product_id === productId);
