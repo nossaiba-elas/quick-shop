@@ -2,7 +2,7 @@
 import axios from 'axios';
 import { Product, CartItem, Order, OrderItem } from '../types';
 
-const API_BASE_URL = 'http://localhost:5000/api';
+const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
 
 function asNumber(value: unknown, fallback = 0): number {
   const parsed = typeof value === 'number' ? value : Number(value);
@@ -13,8 +13,10 @@ export function normalizeProduct(product: Partial<Product> & Record<string, unkn
   return {
     id: asNumber(product.id, 0),
     name: typeof product.name === 'string' ? product.name : 'Produit',
+    name_en: typeof product.name_en === 'string' ? product.name_en : undefined,
     price: asNumber(product.price, 0),
     description: typeof product.description === 'string' ? product.description : '',
+    description_en: typeof product.description_en === 'string' ? product.description_en : undefined,
     image_url: typeof product.image_url === 'string' ? product.image_url : null,
     stock: asNumber(product.stock, 0),
   };
