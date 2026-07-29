@@ -92,8 +92,8 @@ export function ProductDetailModal({ product, language, onClose, onAddToCart }: 
           </div>
 
           <div>
-            <h3 style={{ margin: '0 0 0.5rem', fontSize: '1.5rem', color: '#111827' }}>{product.name}</h3>
-            <p style={{ margin: 0, color: '#64748b', lineHeight: 1.7 }}>{product.description}</p>
+            <h3 style={{ margin: '0 0 0.5rem', fontSize: '1.5rem', color: '#111827' }}>{language === 'en' && product.name_en ? product.name_en : product.name}</h3>
+            <p style={{ margin: 0, color: '#64748b', lineHeight: 1.7 }}>{language === 'en' && product.description_en ? product.description_en : product.description}</p>
           </div>
 
           <div style={{ display: 'flex', gap: '0.8rem', flexWrap: 'wrap' }}>

@@ -76,10 +76,10 @@ export function ProductCard({ product, onAddToCart, onOpenDetails, language }: P
         </div>
 
         <h3 style={{ margin: 0, fontSize: '1.05rem', fontWeight: 700, color: '#111827', lineHeight: 1.35 }}>
-          {product.name}
+          {language === 'en' && product.name_en ? product.name_en : product.name}
         </h3>
         <p style={{ margin: 0, fontSize: '0.88rem', color: '#64748b', lineHeight: 1.5, flex: 1 }}>
-          {product.description}
+          {language === 'en' && product.description_en ? product.description_en : product.description}
         </p>
 
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '0.2rem' }}>

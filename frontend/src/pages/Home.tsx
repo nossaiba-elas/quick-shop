@@ -132,10 +132,9 @@ export function Home({ onRequireLogin, language }: { onRequireLogin?: () => void
   const filteredProducts = products.filter((product) => {
     const query = search.toLowerCase().trim();
     if (!query) return true;
-    return (
-      product.name.toLowerCase().includes(query) ||
-      product.description.toLowerCase().includes(query)
-    );
+    const name = (language === 'en' && product.name_en ? product.name_en : product.name).toLowerCase();
+    const desc = (language === 'en' && product.description_en ? product.description_en : product.description).toLowerCase();
+    return name.includes(query) || desc.includes(query);
   });
 
   function handleCheckout() {
