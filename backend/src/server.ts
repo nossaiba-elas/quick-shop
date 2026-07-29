@@ -13,8 +13,12 @@ dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
+const allowedOrigins = [process.env.FRONTEND_URL, process.env.VERCEL_URL]
+  .filter((value): value is string => Boolean(value));
 
-app.use(cors());
+app.use(cors({
+  origin: allowedOrigins.length > 0 ? allowedOrigins : true,
+}));
 app.use(express.json());
 
 app.use('/api/auth', authRoutes);

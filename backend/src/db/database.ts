@@ -5,11 +5,28 @@ import bcrypt from 'bcryptjs';
 
 dotenv.config();
 
+function pickEnv(...keys: string[]) {
+  for (const key of keys) {
+    const value = process.env[key];
+    if (value && value.trim()) {
+      return value;
+    }
+  }
+  return undefined;
+}
+
+const dbHost = pickEnv('DB_HOST', 'MYSQLHOST', 'MYSQL_HOST') || 'localhost';
+const dbUser = pickEnv('DB_USER', 'MYSQLUSER', 'MYSQL_USER') || 'root';
+const dbPassword = pickEnv('DB_PASSWORD', 'MYSQLPASSWORD', 'MYSQL_PASSWORD') || '';
+const dbName = pickEnv('DB_NAME', 'MYSQLDATABASE', 'MYSQL_DATABASE') || 'quick_shop';
+const dbPort = Number(pickEnv('DB_PORT', 'MYSQLPORT', 'MYSQL_PORT') || 3306);
+
 const pool = mysql.createPool({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME,
+  host: dbHost,
+  user: dbUser,
+  password: dbPassword,
+  database: dbName,
+  port: dbPort,
   waitForConnections: true,
   connectionLimit: 10,
   queueLimit: 0,
