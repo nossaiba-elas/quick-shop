@@ -50,6 +50,11 @@ frontend/
     services/
 ```
 
+## Deployment Notes
+- Vercel deploys the `frontend/` folder.
+- Railway deploys the backend from the repository root using `backend/` as the app source.
+- The backend reads Railway MySQL variables automatically when they are provided by the platform.
+
 ## Installation
 
 ### Prerequisites
